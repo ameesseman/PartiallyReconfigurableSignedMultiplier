@@ -1,0 +1,9 @@
+| ------------------- | ------------- | ------------------------- | --------------------------------------------- |
+| Phase               | Time in Phase | Time/Date                 | Description                                   |
+| ------------------- | ------------- | ------------------------- | --------------------------------------------- |
+| add_files           | 00h:00m:00s   | 22:49:28 Tue Jun 09 2020  | Add source files                              |
+| ------------------- | ------------- | ------------------------- | --------------------------------------------- |
+ERROR: [Synth 8-989] signf is already declared in this region [D:/Oakland/ECE5736/FinalProject/smult_dpr/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:41]
+| synth_design        | 00h:00m:04s   | 22:49:29 Tue Jun 09 2020  | ERROR: [Common 17-69] Command failed: Vivado Synthesis failed
+ |
+| ------------------- | ------------- | ------------------------- | --------------------------------------------- |
