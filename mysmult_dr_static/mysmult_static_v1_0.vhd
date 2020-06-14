@@ -22,13 +22,12 @@ entity mysmult_static_v1_0 is
 	);
 	port (
 		-- Users to add ports here
-		
         --used for switching RM
 		switch : in std_logic;
-		dpr_irq: out std_logic;
+		pr_int: out std_logic;
 		
 		--used to alert PS that data is valid
-		done_irq: out std_logic;
+		--done_irq: out std_logic;
 		
 		-- User ports ends
 		-- Do not modify the ports beyond this line
@@ -99,6 +98,14 @@ architecture arch_imp of mysmult_static_v1_0 is
 		C_S_AXI_BUSER_WIDTH	: integer	:= 0
 		);
 		port (
+		-- Users to add ports here
+	    --done_irq : out std_logic;
+	    
+	    switch: in std_logic;
+	    pr_int: out std_logic;
+		-- User ports ends
+		-- Do not modify the ports beyond this line
+		
 		S_AXI_ACLK	: in std_logic;
 		S_AXI_ARESETN	: in std_logic;
 		S_AXI_AWID	: in std_logic_vector(C_S_AXI_ID_WIDTH-1 downto 0);
@@ -163,6 +170,9 @@ mysmult_static_v1_0_S00_AXI_inst : mysmult_static_v1_0_S00_AXI
 		C_S_AXI_BUSER_WIDTH	=> C_S00_AXI_BUSER_WIDTH
 	)
 	port map (
+	    switch => switch,
+	    pr_int => pr_int, 
+	    
 		S_AXI_ACLK	=> s00_axi_aclk,
 		S_AXI_ARESETN	=> s00_axi_aresetn,
 		S_AXI_AWID	=> s00_axi_awid,

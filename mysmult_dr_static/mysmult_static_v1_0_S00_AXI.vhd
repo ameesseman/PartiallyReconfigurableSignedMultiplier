@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity mysmult_static_v1_0_S00_AXI is
 	generic (
 		-- Users to add parameters here
-
+        
 		-- User parameters ends
 		-- Do not modify the parameters beyond this line
 
@@ -28,7 +28,10 @@ entity mysmult_static_v1_0_S00_AXI is
 	);
 	port (
 		-- Users to add ports here
-
+	    done_irq : out std_logic;
+	    
+	    switch: in std_logic;
+	    pr_int: out std_logic;
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -220,6 +223,12 @@ architecture arch_imp of mysmult_static_v1_0_S00_AXI is
             C_S_AXI_ADDR_WIDTH	: integer	:= 6
         );
         port (
+        --user defined
+	       done_irq : out std_logic;
+	       
+	       switch: in std_logic;
+	       pr_int: out std_logic;
+	       
             -- Global Clock Signal
             S_AXI_ACLK    : in std_logic;
             -- Global Reset Signal. This Signal is Active LOW
@@ -241,7 +250,9 @@ architecture arch_imp of mysmult_static_v1_0_S00_AXI is
             -- Write Data
             S_AXI_WDATA   : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
             -- Read Data
-            S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);            
+            S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);  
+            
+            S_AXI_ARREADY	: in std_logic;            
             
             -- The axi_awv_awr_flag flag marks the presence of write address valid
             axi_awv_awr_flag : in std_logic;
@@ -469,7 +480,7 @@ begin
 
 -- My IP:
    th: myAXI_IP generic map (C_S_AXI_DATA_WIDTH, C_S_AXI_ADDR_WIDTH)
-       port map (S_AXI_ACLK, S_AXI_ARESETN, S_AXI_WVALID, S_AXI_WSTRB, axi_wready, S_AXI_RREADY, axi_rvalid, S_AXI_RRESP, S_AXI_WDATA, axi_rdata, 
-                 axi_awv_awr_flag, axi_arv_arr_flag, axi_awaddr, axi_araddr);
+       port map (done_irq, switch, pr_int, S_AXI_ACLK, S_AXI_ARESETN, S_AXI_WVALID, S_AXI_WSTRB, axi_wready, S_AXI_RREADY, axi_rvalid, S_AXI_RRESP, S_AXI_WDATA, axi_rdata, 
+                 axi_arready, axi_awv_awr_flag, axi_arv_arr_flag, axi_awaddr, axi_araddr);
     
 end arch_imp;

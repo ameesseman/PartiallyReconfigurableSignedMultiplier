@@ -19,14 +19,17 @@ entity static is
 			rst: in std_logic; -- high-level reset				
 			DI: in std_logic_vector (31 downto 0);
 			ofull, iempty: in std_logic;
-			owren, irden: out std_logic
-			Ain, Bin: out std_logic_vector(N-1 downto 0)				--inputs A and B from AXI bus sent to RP
-			abs_Ain, abs_Bin: in std_logic_vector(N-1 downto 0)			--received from RP, abs values of A and B
-			unsProd: std_logic_vector((N*2)-1 downto 0)					--unsigned product of abs_Ain and abs_Bin sent back to RP
+			owren, irden: out std_logic;
+			Ain, Bin: out std_logic_vector(N-1 downto 0);				--inputs A and B from AXI bus sent to RP
+			abs_Ain, abs_Bin: in std_logic_vector(N-1 downto 0);		--received from RP, abs values of A and B
+			unsProd: out std_logic_vector((N*2)-1 downto 0);			--unsigned product of abs_Ain and abs_Bin sent back to RP
+			pFinal: in std_logic_vector((N*2)-1 downto 0); 
+			pFinalReg: out std_logic_vector((N*2)-1 downto 0);
+			done_irq: out std_logic
 			);				
-end mycordic_ip;
+end static;
 
-architecture structure of mycordic_ip is
+architecture structure of static is
 
 
 --
@@ -70,7 +73,7 @@ end component;
 --Signals
 signal resetn: std_logic;
 	
-type state is (S1, S2, S3, S4, S5, S6, S7);
+type state is (S1, S2, S3, S4, S5, S6, S7, S8, S9);
 signal y: state;
 
 signal sig_done: std_logic;			--from iterative multiplier
@@ -83,7 +86,7 @@ signal sig_compA, sig_compB: std_logic;
 signal sig_new_data: std_logic;				--fsm input
 
 --FSM
-signal sig_Eri, sig_s: std_logic;			--fsm output signals
+signal sig_Eri, sig_Ero, sig_s: std_logic;			--fsm output signals
 signal count_internal: integer range 0 to 7;	      
 
 
@@ -99,7 +102,7 @@ Bin <= sig_ABdata(15 downto 8);
 -- ****************************
 -- Controllingo BOTH the Input/Output side:	
 -- **************************** 
-		Transitions: process (rst, clock, iempty, ofull, sig_done, sig_new_data)
+		Transitions: process (rst, clock, iempty, ofull, sig_done, sig_new_data, count_internal)
 		begin
 			if rst = '1' then
 				y <= S1; 
@@ -118,8 +121,8 @@ Bin <= sig_ABdata(15 downto 8);
 					when S3 =>
 						if sig_new_data = '1' then y <= S4; 
 						else 
-							if count = 5 then y <= S4; count <= 0;
-							else count <= count+1; y <= S3;
+							if count_internal = 2 then y <= S4; count_internal <= 0;
+							else count_internal <= count_internal+1; y <= S3;
 							end if;
 						end if;
 				
@@ -128,13 +131,20 @@ Bin <= sig_ABdata(15 downto 8);
 	
 					when S5 =>
 						if sig_done = '1' then y <= S6; else y <= S5; end if;
+						--if sig_done = '1' then y <= S7; else y <= S5; end if;
                         
 					when S6 =>
-						if count = 5 then y <= S7; count <= 0;
-						else count <= count+1; y <= S6;
+						if count_internal = 2 then y <= S7; count_internal <= 0;
+						else count_internal <= count_internal+1; y <= S6;
 						end if;
-                       			   
+						
 					when S7 =>
+					   y <= S8;
+                       			   
+					when S8 =>
+                       y <= S9;
+                       
+                    when S9 =>
                        y <= S2;
 					   
 				end case;
@@ -146,8 +156,10 @@ Bin <= sig_ABdata(15 downto 8);
 			-- Initialization of signals
 			sig_s <= '0';
 			sig_Eri <= '0';
+			sig_Ero <= '0';
 			irden <= '0';
 			owren <= '0';
+			done_irq <= '0';
 
 			case y is
 				when S1 =>	
@@ -166,14 +178,22 @@ Bin <= sig_ABdata(15 downto 8);
 					sig_s <= '1';
 				
 				when S5 =>
+				    sig_s <= '1';
 					--no outputs
 					
 				when S6 =>
+				    sig_s <= '1';
 					--no outputs. Waiting a few clock cycles so RP is finished with data
-				
+					
 				when S7 =>
+				    sig_s <= '1';
+				    sig_Ero <= '1';
+				
+				when S8 =>
 					owren <= '1';
 				
+				when S9 =>
+				    done_irq <= '1';
 
 				end case;
 			
@@ -192,14 +212,24 @@ Bin <= sig_ABdata(15 downto 8);
 				   );
 
 
--- Register for holding X and Y in values before Zin and mode are fed to Cordic circuit       
-    reg: my_rege generic map(N => 32)
+-- Register for holding input data from AXI bus      
+    ireg: my_rege generic map(N => 32)
         port map(clock => clock,  
                  resetn => resetn, 
                  E => sig_Eri, 
                  sclr => '0', 
                  D => DI, 
                  Q => sig_ABdata
+                 );
+                 
+-- Register for holding calcualted signed product     
+    oReg: my_rege generic map(N => 16)
+        port map(clock => clock,  
+                 resetn => resetn, 
+                 E => sig_Ero, 
+                 sclr => '0', 
+                 D => pFinal, 
+                 Q => pFinalReg 
                  );
 
 	ac: genStartSignal

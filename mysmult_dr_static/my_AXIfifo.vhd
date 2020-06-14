@@ -15,6 +15,13 @@ entity my_AXIfifo is
 		C_S_AXI_ADDR_WIDTH	: integer	:= 6
 	);
 	port (
+	--user defined
+	    done_irq : out std_logic;      --not being used
+	    
+	    switch: in std_logic;
+	    pr_int: out std_logic;
+	 --end user defined   
+	  
 	    -- Global Clock Signal
         S_AXI_ACLK    : in std_logic;
         -- Global Reset Signal. This Signal is Active LOW
@@ -38,15 +45,27 @@ entity my_AXIfifo is
         S_AXI_WDATA   : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		-- Read Data
         S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        
+        S_AXI_ARREADY	: in std_logic;  
 
 	    -- The axi_awv_awr_flag flag marks the presence of write address valid
         axi_awv_awr_flag : in std_logic;
         --The axi_arv_arr_flag flag marks the presence of read address valid
-        axi_arv_arr_flag : in std_logic
+        axi_arv_arr_flag : in std_logic;
+        axi_awaddr, axi_araddr	: in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0)
         );
 end my_AXIfifo;
 
 architecture arch_imp of my_AXIfifo is
+
+    function to_integer ( s : std_logic) return natural is
+    begin  
+      if s = '1' then
+        return 1;
+      else
+        return 0;
+      end if;
+    end function;
 
     signal axi_rvalid : std_logic;
     signal axi_rresp  : std_logic_vector(1 downto 0);
@@ -59,7 +78,9 @@ architecture arch_imp of my_AXIfifo is
 
 	------------------------------------------------------------------------
 	type state is (S1, S2);
+	type state_n is (S1, S2, S3);
     signal y_fx, y: state;
+    signal y_int: state_n;
     signal clkfx: std_logic;
     signal rst: std_logic;
 
@@ -74,14 +95,21 @@ architecture arch_imp of my_AXIfifo is
     signal oempty, ofull: std_logic;
 
     signal fifo_fsm_rstq, fifo_fsm_rst, sclrC, EC, zC: std_logic;
+    
+    signal previousSwitch: integer := 0;
+    signal pr_int_c: std_logic;
+    signal PR_reset: std_logic; --need for PR reset
+    signal sig_switch_db: std_logic;
 
-    component mycordic_ip
+    component smult_ip
         port (    clock: in std_logic;
                     rst: in std_logic; -- high-level reset
                     DI: in std_logic_vector (31 downto 0);
                     DO: out std_logic_vector (31 downto 0);
                     ofull, iempty: in std_logic;
-                    owren, irden: out std_logic);
+                    owren, irden: out std_logic;
+			        done_irq: out std_logic
+                   );
     end component;
 
     component my_genpulse_sclr
@@ -90,6 +118,14 @@ architecture arch_imp of my_AXIfifo is
         port (clock, resetn, E, sclr: in std_logic;
                 Q: out std_logic_vector ( integer(ceil(log2(real(COUNT)))) - 1 downto 0);
                 z: out std_logic);
+    end component;
+    
+    -- Debounces a signal to properly detect a pulse.
+    component mydebouncer is
+       generic (COUNT: INTEGER := 2*(10**6));  -- 20 ms for T=10 ns (f=100 MHz)
+	   port (resetn, clock: in std_logic; -- clock: 100 MHz, resetn: active-low reset
+	         w: in std_logic;
+		     w_db: out std_logic);
     end component;
 
 begin
@@ -103,29 +139,107 @@ a1: assert (C_S_AXI_DATA_WIDTH = 32 or C_S_AXI_DATA_WIDTH = 64)
     clkfx <= S_AXI_ACLK;
     --rst <= not (S_AXI_ARESETN);
 
-----prevSwitch declared as some variable above. Just holds previous switch value
-----so logic is able to determine is switch has changed
---
--- -- Sample interrupt for switch
---  process (S_AXI_ACLK, S_AXI_ARESETN, switch)
+
+    --PR_reset <= '1' when ( (axi_awaddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) = "1011") and S_AXI_WDATA = x"AA995577") else '0';
+    -- This circuit generates a pulse 
+    process (S_AXI_ACLK, S_AXI_ARESETN, S_AXI_WDATA, PR_reset)
+    begin
+      if S_AXI_ARESETN = '0' then
+            PR_reset <= '0';
+      elsif rising_edge(S_AXI_ACLK) then 
+          if ( axi_awaddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) = "1011" and S_AXI_WDATA = x"AA995577" and PR_reset ='0') then
+            PR_reset <= '1';
+          elsif (PR_reset = '1') then
+            PR_reset <= '0';
+          end if; 
+      end if;         
+    end process; 
+    
+    
+--prevSwitch declared as some variable above. Just holds previous switch value
+--so logic is able to determine is switch has changed
+
+ -- Sample interrupt for switch
+--  process (S_AXI_ACLK, S_AXI_ARESETN, axi_araddr, switch, pr_int_c, previousSwitch)
 --  begin
 --      if S_AXI_ARESETN = '0' then
---          oint_t <= '0';
+--          pr_int_c <= '0'; y_int <= S1;
 --      elsif rising_edge(S_AXI_ACLK) then
---		--interrupt triggered if state of switch is changed
---          if ( (switch = '0' and prevSwitch = '1' and oint_t ='0') ) then
---              oint_t <= '1'; prevSwitch = '0';
---		elsif ( (switch = '1' and prevSwitch = '0' and oint_t ='0') ) then
---			oint_t <'1'; prevSwitch = '1';
---
---
+--		--interrupt triggered if state of switch is changed to 1
+--		if ( (switch = '1' and pr_int_c ='0') ) then
+--			pr_int_c <= '1'; 
+
 --		--SW clearing ISR
 --          elsif (axi_araddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) = "1101") then
---              oint_t <= '0';
+--              pr_int_c <= '0';
 --          end if;
 --      end if;
 --  end process;
+--  pr_int <= pr_int_c;
 
+db: mydebouncer
+        --generic map ( COUNT => 10)              -- for debug
+        generic map ( COUNT => (2*(10**6)))    -- for actual implementation
+        port map ( resetn => S_AXI_ARESETN, 
+                   clock => S_AXI_ACLK, 
+                   w => switch, 
+                   w_db => sig_switch_db );
+
+
+--Cannot use switch for this so need to change SM logic to fit for button
+  pr_int <= pr_int_c;
+     irq_transitions: process (y_int, S_AXI_ARESETN, S_AXI_ACLK, axi_araddr, S_AXI_ARREADY, sig_switch_db, previousSwitch)
+	begin
+		if S_AXI_ARESETN = '0' then
+			y_int <= S1;
+		elsif (S_AXI_ACLK'event and S_AXI_ACLK = '1') then
+			case y_int is
+				when S1 =>
+				    if(sig_switch_db = '0') then
+				        y_int <= S2;
+				        previousSwitch <= to_integer((sig_switch_db));
+				     else
+				        y_int <= S1;
+				     end if;
+				when S2 =>
+				    if ( (sig_switch_db = '1' and previousSwitch = 0) ) then
+				        y_int <= S3;
+				    else
+				        y_int <= S2;   
+				    end if;
+				 when S3 => 
+				    if ((axi_araddr(C_S_AXI_ADDR_WIDTH-1 downto ADDR_LSB) = "1101") and S_AXI_ARREADY = '1') then
+				        y_int <= S1;
+				        previousSwitch <= to_integer((sig_switch_db)); 
+				    else
+				        y_int <= S3;
+				    end if;			  				     		
+			end case;
+		end if;
+	end process;
+
+	irq_outputs: process(y_int, sig_switch_db, previousSwitch)
+	begin
+		-- Initialization of signals:
+		pr_int_c <= '0';
+		case y_int is
+			when S1 => 
+
+			when S2 =>
+		      --interrupt triggered if state of switch is changed to 1
+		      if ( (sig_switch_db = '1' and previousSwitch = 0) ) then
+			     pr_int_c <= '1'; 
+			  end if;
+			  
+			when S3 =>
+                pr_int_c <= '1';
+
+              
+		end case;
+	end process;
+    
+    
+    
     S_AXI_RDATA <= oFIFO_DO;
     iFIFO_DI <= S_AXI_WDATA;
 
@@ -134,7 +248,8 @@ a1: assert (C_S_AXI_DATA_WIDTH = 32 or C_S_AXI_DATA_WIDTH = 64)
      -- PLBW: number of bits of the interface. Here we use 32 bits for AXI interface
      --       we might need to change to BUSW instead (this is a cosmetic change for later)
     ji: smult_ip  port map (clock => clkfx, rst => rst, DI => iFIFO_DO, DO => oFIFO_DI,
-                             ofull => ofull, iempty => iempty, owren => owren, irden => irden);
+                             ofull => ofull, iempty => iempty, owren => owren, irden => irden,
+                             done_irq => done_irq);
     -- *******************************************************************************************************
 
 	-- Implement axi_arvalid generation
@@ -195,7 +310,7 @@ c1: my_genpulse_sclr generic map (COUNT => 16)
 				        y <= S1;
 				    end if;
 				when S2 =>
-					y <= S2;
+					if PR_reset = '1' then y <= S1; else y <= S2; end if;
 			end case;
 		end if;
 	end process;
