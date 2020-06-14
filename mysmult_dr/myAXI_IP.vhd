@@ -13,7 +13,9 @@ entity myAXI_IP is
 	--user defined
 	    done_irq : out std_logic;
 	    
-	    
+	    switch: in std_logic;
+	    pr_int: out std_logic;
+	     
 	    -- Global Clock Signal
         S_AXI_ACLK    : in std_logic;
         -- Global Reset Signal. This Signal is Active LOW
@@ -36,7 +38,9 @@ entity myAXI_IP is
 	    -- Write Data
         S_AXI_WDATA   : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 		-- Read Data
-        S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);            
+        S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);  
+        
+        S_AXI_ARREADY	: in std_logic;          
         
 	    -- The axi_awv_awr_flag flag marks the presence of write address valid
         axi_awv_awr_flag : in std_logic;
@@ -59,6 +63,9 @@ architecture arch_imp of myAXI_IP is
         --user defined
 	       done_irq : out std_logic;
 	    
+	       switch: in std_logic;
+	       pr_int: out std_logic;
+	       
             -- Global Clock Signal
             S_AXI_ACLK    : in std_logic;
             -- Global Reset Signal. This Signal is Active LOW
@@ -81,19 +88,22 @@ architecture arch_imp of myAXI_IP is
             -- Write Data
             S_AXI_WDATA   : in std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
             -- Read Data
-            S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);            
+            S_AXI_RDATA   : out std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);  
+            
+            S_AXI_ARREADY	: in std_logic;              
             
             -- The axi_awv_awr_flag flag marks the presence of write address valid
             axi_awv_awr_flag : in std_logic;
             --The axi_arv_arr_flag flag marks the presence of read address valid
-            axi_arv_arr_flag : in std_logic
+            axi_arv_arr_flag : in std_logic;
+            axi_awaddr, axi_araddr	: in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0)
         );
     end component;
 
 begin
 
         th: my_AXIfifo generic map (C_S_AXI_DATA_WIDTH, C_S_AXI_ADDR_WIDTH)
-            port map (done_irq, S_AXI_ACLK, S_AXI_ARESETN, S_AXI_WVALID, S_AXI_WSTRB, S_AXI_WREADY, S_AXI_RREADY, S_AXI_RVALID, S_AXI_RRESP, S_AXI_WDATA, S_AXI_RDATA, 
-                      axi_awv_awr_flag, axi_arv_arr_flag);        
+            port map (done_irq, switch, pr_int, S_AXI_ACLK, S_AXI_ARESETN, S_AXI_WVALID, S_AXI_WSTRB, S_AXI_WREADY, S_AXI_RREADY, S_AXI_RVALID, S_AXI_RRESP, S_AXI_WDATA, S_AXI_RDATA, 
+                      S_AXI_ARREADY, axi_awv_awr_flag, axi_arv_arr_flag, axi_awaddr, axi_araddr);        
         
 end arch_imp;
