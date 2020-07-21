@@ -1,1 +1,0 @@
-/Tcl/synth_utils.tcl: It was modified (one line commented out) so that VHDL synthesis works
