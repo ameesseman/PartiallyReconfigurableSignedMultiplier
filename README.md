@@ -11,4 +11,18 @@ The software allows the circuit to be interacted with in several ways:
 2. The processor can poll I/O values to determine when to perform a DPR and which RM to then reconfigure
 3. The processor can receive an interrupt to determine when to perform a DPR and use an I/O to determine which RM to then reconfigure
 
+# Repository File Structure
+- hdl-resources: 
+Includes all HDL resources used in the creation of this system. Subfolders are used to section off which IP the resources belong to
 
+- my_dynsmult: 
+The Xilinx compliant file structure used to create the reconfigurable resources for the project
+
+- resources:
+Contains the Tcl commands used to generate the DPR resources used for the system
+
+- software: 
+Includes all software resources used
+
+- mysmult_dr, mysmult_dr_static: 
+Obsolete
