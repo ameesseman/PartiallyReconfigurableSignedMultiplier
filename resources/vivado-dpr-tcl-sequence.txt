@@ -1,0 +1,65 @@
+- Must put wrapper .dcp in ./Synth/Static 
+- and PS7 .xdc in ./Sources/xdc
+
+- Naviagate to project directory
+
+source design.tcl –notrace 			//run tcl
+open_checkpoint Synth/Static/design_1_wrapper.dcp
+
+- Find <path> of rp
+<path> = design_1_i/mysmult_static_0/U0/mysmult_static_v1_0_S00_AXI_inst/th/th/ji/rP
+
+
+
+read_checkpoint -cell design_1_i/mysmult_static_0/U0/mysmult_static_v1_0_S00_AXI_inst/th/th/ji/rP Synth/mult_2c/sam_2c_rp_synth.dcp
+set_property HD.RECONFIGURABLE 1 [get_cells design_1_i/mysmult_static_0/U0/mysmult_static_v1_0_S00_AXI_inst/th/th/ji/rP]
+write_checkpoint ./Checkpoint/top_mult_2c.dcp
+
+
+- Select design_1_i/mysmult_static_0/U0/mysmult_static_v1_0_S00_AXI_inst/th/th/ji/rP instance in Netlist and draw pblock
+- Report DRC (PR)
+
+--2C RM
+write_xdc ./Sources/xdc/fplan.xdc
+read_xdc Sources/xdc/design_1_processing_system7_0_1.xdc
+- read_xdc Sources/xdc/Zybo-Z7-Master.xdc   //is this where this would happen??
+opt_design
+place_design
+route_design
+write_checkpoint -force Implement/Config_mult_2c/top_route_design.dcp
+report_utilization -file Implement/Config_mult_2c/top_utilization.rpt
+report_timing_summary -file Implement/Config_mult_2c/top_timing_summary.rpt
+
+--static
+update_design -cell design_1_i/mysmult_static_0/U0/mysmult_static_v1_0_S00_AXI_inst/th/th/ji/rP -black_box
+lock_design -level routing
+write_checkpoint -force Checkpoint/static_route_design.dcp
+
+--SM
+read_checkpoint -cell design_1_i/mysmult_static_0/U0/mysmult_static_v1_0_S00_AXI_inst/th/th/ji/rP Synth/mult_sm/sam_2c_rp_synth.dcp
+opt_design
+place_design
+route_design
+write_checkpoint -force Implement/Config_mult_sm/top_route_design.dcp
+report_utilization -file Implement/Config_mult_sm/top_utilization.rpt
+report_timing_summary -file Implement/Config_mult_sm/top_timing_summary.rpt
+
+close_project
+
+
+
+--verify PR
+pr_verify Implement/Config_mult_2c/top_route_design.dcp Implement/Config_mult_sm/top_route_design.dcp
+
+
+--write 2C bitstreams and binaries
+open_checkpoint Implement/Config_mult_2c/top_route_design.dcp
+write_bitstream -file Bitstreams/Config_mult_2c.bit
+write_bitstream -bin_file –no_binary_bitfile Bitstreams/Config_mult_2c
+write_cfgmem -format BIN -interface SMAPx32 -disablebitswap -loadbit "up 0x0 Bitstreams/Config_mult_2c_pblock_rp_partial.bit" -file Bitstreams/Config_mult_2c_pblock_rp_partialu
+
+--write SM bitstreams and binaries
+open_checkpoint Implement/Config_mult_sm/top_route_design.dcp
+write_bitstream -file Bitstreams/Config_mult_sm.bit
+write_bitstream -bin_file –no_binary_bitfile Bitstreams/Config_mult_sm
+write_cfgmem -format BIN -interface SMAPx32 -disablebitswap -loadbit "up 0x0 Bitstreams/Config_mult_sm_pblock_rp_partial.bit" -file Bitstreams/Config_mult_sm_pblock_rp_partialu
