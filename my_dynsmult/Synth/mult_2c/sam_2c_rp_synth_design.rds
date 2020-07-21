@@ -1,0 +1,274 @@
+Command: synth_design -mode out_of_context -flatten_hierarchy rebuilt -top sam_2c_rp -part xc7z010clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 12364 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 486.180 ; gain = 185.090
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'sam_2c_rp' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/sam_2c_rp.vhd:46]
+	Parameter N bound to: 8 - type: integer 
+	Parameter N bound to: 8 - type: integer 
+	Parameter mode bound to: 2C - type: string 
+INFO: [Synth 8-3491] module 'top_smult' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:15' bound to instance 'rp' of component 'top_smult' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/sam_2c_rp.vhd:62]
+INFO: [Synth 8-638] synthesizing module 'top_smult' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:26]
+	Parameter N bound to: 8 - type: integer 
+	Parameter mode bound to: 2C - type: string 
+	Parameter N bound to: 8 - type: integer 
+INFO: [Synth 8-3491] module 'my_addsub' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:14' bound to instance 'AAabs' of component 'my_addsub' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:47]
+INFO: [Synth 8-638] synthesizing module 'my_addsub' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:23]
+	Parameter N bound to: 8 - type: integer 
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-638] synthesizing module 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:19]
+INFO: [Synth 8-256] done synthesizing module 'fulladd' (1#1) [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:19]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-256] done synthesizing module 'my_addsub' (2#1) [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:23]
+	Parameter N bound to: 8 - type: integer 
+INFO: [Synth 8-3491] module 'my_addsub' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:14' bound to instance 'BBabs' of component 'my_addsub' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:50]
+	Parameter N bound to: 16 - type: integer 
+INFO: [Synth 8-3491] module 'my_addsub' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:14' bound to instance 'MMagabs' of component 'my_addsub' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:54]
+INFO: [Synth 8-638] synthesizing module 'my_addsub__parameterized2' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:23]
+	Parameter N bound to: 16 - type: integer 
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-3491] module 'fulladd' declared at 'D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/fulladd.vhd:14' bound to instance 'fi' of component 'fulladd' [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:40]
+INFO: [Synth 8-256] done synthesizing module 'my_addsub__parameterized2' (2#1) [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/my_addsub.vhd:23]
+INFO: [Synth 8-256] done synthesizing module 'top_smult' (3#1) [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/top_smult.vhd:26]
+WARNING: [Synth 8-3848] Net done in module/entity sam_2c_rp does not have driver. [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/sam_2c_rp.vhd:41]
+INFO: [Synth 8-256] done synthesizing module 'sam_2c_rp' (4#1) [D:/Oakland/ECE5736/FinalProject/allResources/FinalAttempt1/my_dynsmult/Sources/hdl/mult_2c/sam_2c_rp.vhd:46]
+WARNING: [Synth 8-3331] design top_smult has unconnected port clock
+WARNING: [Synth 8-3331] design top_smult has unconnected port resetn
+WARNING: [Synth 8-3331] design sam_2c_rp has unconnected port done
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 550.602 ; gain = 249.512
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 550.602 ; gain = 249.512
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z010clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 550.602 ; gain = 249.512
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z010clg400-1
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 550.602 ; gain = 249.512
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---XORs : 
+	   3 Input      1 Bit         XORs := 32    
+	   2 Input      1 Bit         XORs := 36    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module fulladd 
+Detailed RTL Component Info : 
++---XORs : 
+	   3 Input      1 Bit         XORs := 1     
+Module my_addsub 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 9     
+Module my_addsub__parameterized2 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 17    
+Module top_smult 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 80 (col length:40)
+BRAMs: 120 (col length: RAMB18 40 RAMB36 20)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+WARNING: [Synth 8-3331] design sam_2c_rp has unconnected port done
+WARNING: [Synth 8-3331] design sam_2c_rp has unconnected port clock
+WARNING: [Synth 8-3331] design sam_2c_rp has unconnected port resetn
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 683.953 ; gain = 382.863
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 684.895 ; gain = 383.805
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 684.895 ; gain = 383.805
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |LUT2 |     1|
+|2     |LUT3 |     4|
+|3     |LUT4 |     7|
+|4     |LUT5 |     4|
+|5     |LUT6 |    23|
++------+-----+------+
+
+Report Instance Areas: 
++------+---------+-------+------+
+|      |Instance |Module |Cells |
++------+---------+-------+------+
+|1     |top      |       |    39|
++------+---------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 7 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+Synthesis Optimization Complete : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 685.891 ; gain = 384.801
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 806.043 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+45 Infos, 7 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 806.043 ; gain = 504.953

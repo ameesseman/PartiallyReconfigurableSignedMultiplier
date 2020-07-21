@@ -1,0 +1,26 @@
+puts "#HD: Running synthesis for block mult_2c"
+puts "#HD: Setting Tcl Params:"
+set_param hd.visual 1
+create_project -in_memory -part xc7z010clg400-1
+add_files ./Sources/hdl/mult_2c/fulladd.vhd
+add_files ./Sources/hdl/mult_2c/my_addsub.vhd
+add_files ./Sources/hdl/mult_2c/sam_2c_rp.vhd
+add_files ./Sources/hdl/mult_2c/top_smult.vhd
+synth_design -mode out_of_context -flatten_hierarchy rebuilt -top sam_2c_rp -part xc7z010clg400-1
+write_checkpoint -force ./Synth/mult_2c/sam_2c_rp_synth.dcp
+report_utilization -file ./Synth/mult_2c/sam_2c_rp_utilization_synth.rpt
+close_project
+puts "#HD: Synthesis of module mult_2c complete\n"
+puts "#HD: Running synthesis for block mult_sm"
+puts "#HD: Setting Tcl Params:"
+set_param hd.visual 1
+create_project -in_memory -part xc7z010clg400-1
+add_files ./Sources/hdl/mult_sm/fulladd.vhd
+add_files ./Sources/hdl/mult_sm/my_addsub.vhd
+add_files ./Sources/hdl/mult_sm/sam_2c_rp.vhd
+add_files ./Sources/hdl/mult_sm/top_smult.vhd
+synth_design -mode out_of_context -flatten_hierarchy rebuilt -top sam_2c_rp -part xc7z010clg400-1
+write_checkpoint -force ./Synth/mult_sm/sam_2c_rp_synth.dcp
+report_utilization -file ./Synth/mult_sm/sam_2c_rp_utilization_synth.rpt
+close_project
+puts "#HD: Synthesis of module mult_sm complete\n"
